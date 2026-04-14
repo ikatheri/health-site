@@ -124,6 +124,33 @@
             button, select#meals-count, .input-group, .view-mode-container { display: none !important; }
             section { box-shadow: none !important; border: 1px solid #eee !important; page-break-inside: avoid; }
         }
+		
+		/* تنسيق النافذة المنبثقة */
+.modal { 
+    display: none; 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0; top: 0; 
+    width: 100%; height: 100%; 
+    background-color: rgba(0,0,0,0.7); 
+    overflow-y: auto; 
+}
+
+.modal-content { 
+    background-color: white; 
+    margin: 5% auto; 
+    padding: 25px; 
+    border-radius: 15px; 
+    width: 90%; 
+    max-width: 800px; 
+}
+
+.close-modal { 
+    float: left; 
+    font-size: 28px; 
+    font-weight: bold; 
+    cursor: pointer; 
+}
     </style>
 </head>
 <body>
@@ -291,6 +318,8 @@
                     </ul>
                 </div>
             </div>
+			<button class="btn-info" onclick="openModal()">🔍 تعرف على سعرات الأكل والتمارين</button>
+        </section>
         </section>
         
         <button class="btn-pdf" onclick="downloadPDF()">حفظ الخطة كـ PDF 📥</button>
@@ -299,6 +328,154 @@
     <footer>
         <p>تواصل معنا عبر تيك توك: <a href="https://www.tiktok.com/@bodz.sa" target="_blank">@bodz.sa 📱</a></p>
     </footer>
+</div>
+
+<div id="foodModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal" onclick="closeModal()">&times;</span>
+        <h2 style="color:var(--primary)">📊 دليل السعرات الحرارية الشامل</h2>
+        <p>تم تحويل الوحدات للجرام والحبة لتناسب المطبخ العربي.</p>
+        
+        <div style="overflow-x:auto;">
+		
+            <h3>🍽️ دليل السعرات للأطعمة الشائعة</h3>
+
+<table class="details-table">
+
+<thead>
+<tr>
+<th>الصنف</th>
+<th>الوزن</th>
+<th>السعرات</th>
+</tr>
+</thead>
+
+<tbody>
+
+<!-- 🍗 البروتينات -->
+
+<tr><td><b>🍗 البروتينات</b></td><td></td><td></td></tr>
+<tr><td>صدور دجاج مشوي</td><td>100 جرام / قطعة صغيرة</td><td>165 (31g بروتين)</td></tr>
+<tr><td>دجاج مقلي</td><td>100 جرام / قطعة</td><td>260 (27g بروتين)</td></tr>
+<tr><td>لحم بقري مطبوخ</td><td>100 جرام / قطعة متوسطة</td><td>250 (26g بروتين)</td></tr>
+<tr><td>لحم غنم</td><td>100 جرام / قطعة متوسطة</td><td>294 (25g بروتين)</td></tr>
+<tr><td>سمك مشوي</td><td>100 جرام / قطعة / 6 ملاعق أكل</td><td>136 (22g بروتين)</td></tr>
+<tr><td>روبيان</td><td>100 جرام / 6 حبات / 6 ملاعق أكل</td><td>99 (24g بروتين)</td></tr>
+<tr><td>بيض</td><td>100 جرام / حبتين / 6 ملاعق أكل</td><td>155 (13g بروتين)</td></tr>
+<tr><td>تونة</td><td>100 جرام / علبة صغيرة / 6 ملاعق أكل</td><td>132 (29g بروتين)</td></tr>
+
+<!-- 🍚 الأكلات السعودية -->
+
+<tr><td><b>🍚 الأكلات السعودية</b></td><td></td><td></td></tr>
+
+<tr><td>رز أبيض مطبوخ</td><td>100 جرام / نصف كوب</td><td>130</td></tr>
+<tr><td>رز كبسة</td><td>100 جرام / نصف كوب</td><td>150</td></tr>
+<tr><td>رز بخاري</td><td>100 جرام / نصف كوب</td><td>160</td></tr>
+<tr><td>رز مندي</td><td>100 جرام / نصف كوب</td><td>170</td></tr>
+<tr><td>برياني</td><td>100 جرام / نصف كوب</td><td>180</td></tr>
+<tr><td>جريش</td><td>100 جرام / نصف كوب</td><td>120</td></tr>
+<tr><td>قرصان</td><td>100 جرام / نصف كوب</td><td>110</td></tr>
+<tr><td>مرقوق</td><td>100 جرام / نصف كوب</td><td>115</td></tr>
+<tr><td>مطازيز</td><td>100 جرام / نصف كوب</td><td>130</td></tr>
+<tr><td>سليق</td><td>100 جرام / نصف كوب</td><td>140</td></tr>
+
+<!-- 🍳 الفطور -->
+
+<tr><td><b>🍳 الفطور</b></td><td></td><td></td></tr>
+
+<tr><td>بيض مسلوق</td><td>100 جرام / حبتين</td><td>155</td></tr>
+<tr><td>بيض مقلي</td><td>100 جرام / حبتين</td><td>196</td></tr>
+<tr><td>فول</td><td>100 جرام / نصف كوب</td><td>110</td></tr>
+<tr><td>حمص</td><td>100 جرام / نصف كوب</td><td>166</td></tr>
+<tr><td>شكشوكة</td><td>100 جرام / نصف كوب</td><td>150</td></tr>
+<tr><td>لبنة</td><td>100 جرام / نصف كوب</td><td>180</td></tr>
+<tr><td>جبنة بيضاء</td><td>100 جرام / 4 شرائح</td><td>260</td></tr>
+<tr><td>زبادي</td><td>100 جرام / نصف كوب</td><td>60</td></tr>
+
+<!-- 🥖 الخبز -->
+
+<tr><td><b>🥖 الخبز والمخبوزات</b></td><td></td><td></td></tr>
+
+<tr><td>خبز عربي</td><td>100 جرام / رغيف</td><td>275</td></tr>
+<tr><td>خبز تميس</td><td>100 جرام / نصف رغيف</td><td>300</td></tr>
+<tr><td>خبز شباتي</td><td>100 جرام / رغيف</td><td>260</td></tr>
+<tr><td>صامولي</td><td>100 جرام / حبة</td><td>265</td></tr>
+<tr><td>كرواسون</td><td>100 جرام / حبة</td><td>406</td></tr>
+<tr><td>فطيرة جبن</td><td>100 جرام / قطعة</td><td>290</td></tr>
+
+<!-- 🍟 الوجبات السريعة -->
+
+<tr><td><b>🍟 الوجبات السريعة</b></td><td></td><td></td></tr>
+
+<tr><td>شاورما دجاج</td><td>100 جرام / نصف ساندويتش</td><td>200</td></tr>
+<tr><td>شاورما لحم</td><td>100 جرام / نصف ساندويتش</td><td>250</td></tr>
+<tr><td>برجر لحم</td><td>100 جرام / نصف برجر</td><td>295</td></tr>
+<tr><td>برجر دجاج</td><td>100 جرام / نصف برجر</td><td>260</td></tr>
+<tr><td>بطاطس مقلية</td><td>100 جرام / قبضة يد</td><td>312</td></tr>
+<tr><td>سمبوسة</td><td>100 جرام / 3 حبات</td><td>280</td></tr>
+<tr><td>فلافل</td><td>100 جرام / 5 حبات</td><td>333</td></tr>
+
+<!-- 🥗 الخضار -->
+
+<tr><td><b>🥗 الخضار</b></td><td></td><td></td></tr>
+
+<tr><td>خيار</td><td>100 جرام / حبة</td><td>15</td></tr>
+<tr><td>طماطم</td><td>100 جرام / حبة</td><td>18</td></tr>
+<tr><td>جزر</td><td>100 جرام / حبة</td><td>41</td></tr>
+<tr><td>بطاطس</td><td>100 جرام / حبة صغيرة</td><td>77</td></tr>
+<tr><td>بصل</td><td>100 جرام / حبة</td><td>40</td></tr>
+<tr><td>فلفل أخضر</td><td>100 جرام / حبة</td><td>20</td></tr>
+<tr><td>كوسة</td><td>100 جرام / حبة</td><td>17</td></tr>
+<tr><td>باذنجان</td><td>100 جرام / نصف حبة</td><td>25</td></tr>
+<tr><td>خس</td><td>100 جرام / كوبين</td><td>15</td></tr>
+
+<!-- 🍎 الفواكه -->
+
+<tr><td><b>🍎 الفواكه</b></td><td></td><td></td></tr>
+
+<tr><td>تفاح</td><td>100 جرام / تفاحة صغيرة</td><td>52</td></tr>
+<tr><td>موز</td><td>100 جرام / موزة متوسطة</td><td>89</td></tr>
+<tr><td>برتقال</td><td>100 جرام / برتقالة</td><td>47</td></tr>
+<tr><td>عنب</td><td>100 جرام / 10 حبات</td><td>69</td></tr>
+<tr><td>بطيخ</td><td>100 جرام / شريحة</td><td>30</td></tr>
+<tr><td>مانجو</td><td>100 جرام / نصف حبة</td><td>60</td></tr>
+<tr><td>تمر</td><td>100 جرام / 7 حبات</td><td>277</td></tr>
+
+<!-- 🍰 الحلويات -->
+
+<tr><td><b>🍰 الحلويات</b></td><td></td><td></td></tr>
+
+<tr><td>لقيمات</td><td>100 جرام / 6 حبات</td><td>300</td></tr>
+<tr><td>كنافة</td><td>100 جرام / قطعة</td><td>350</td></tr>
+<tr><td>بسبوسة</td><td>100 جرام / قطعة</td><td>320</td></tr>
+<tr><td>معمول</td><td>100 جرام / 2 حبة</td><td>360</td></tr>
+<tr><td>دونات</td><td>100 جرام / حبة</td><td>260</td></tr>
+
+<!-- 🧂 الإضافات -->
+
+<tr><td><b>🧂 الإضافات</b></td><td></td><td></td></tr>
+
+<tr><td>زيت زيتون</td><td>100 جرام / 7 ملاعق</td><td>884</td></tr>
+<tr><td>مايونيز</td><td>100 جرام / 7 ملاعق</td><td>680</td></tr>
+<tr><td>كاتشب</td><td>100 جرام / 7 ملاعق</td><td>112</td></tr>
+<tr><td>طحينة</td><td>100 جرام / 7 ملاعق</td><td>595</td></tr>
+
+<!-- 🥤 المشروبات -->
+
+<tr><td><b>🥤 المشروبات</b></td><td></td><td></td></tr>
+
+<tr><td>شاي بدون سكر</td><td>كوب</td><td>0</td></tr>
+<tr><td>شاي مع سكر</td><td>كوب</td><td>40</td></tr>
+<tr><td>قهوة عربية</td><td>فنجان</td><td>10</td></tr>
+<tr><td>قهوة بالحليب</td><td>كوب</td><td>120</td></tr>
+<tr><td>عصير برتقال</td><td>100 جرام / نصف كوب</td><td>45</td></tr>
+<tr><td>بيبسي</td><td>علبة</td><td>150</td></tr>
+
+</tbody>
+
+</table>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -451,6 +628,23 @@
             calculate(false);
         }
     }
+	// وظيفة فتح النافذة
+function openModal() { 
+    document.getElementById('foodModal').style.display = "block"; 
+}
+
+// وظيفة إغلاق النافذة
+function closeModal() { 
+    document.getElementById('foodModal').style.display = "none"; 
+}
+
+// إغلاق النافذة عند الضغط في أي مكان خارجها
+window.onclick = function(event) { 
+    let modal = document.getElementById('foodModal');
+    if (event.target == modal) { 
+        closeModal(); 
+    } 
+}
 </script>
 </body>
 </html>
