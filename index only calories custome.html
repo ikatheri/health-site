@@ -280,38 +280,14 @@ input:checked + .slider:before { transform: translateX(26px); }
 </section>
 
         <section>
-    <h3>📋 ثالثاً: اختيار الخطة (Macro Split)</h3>
-    <select id="macro-plan" onchange="updateMacros()" style="width: 100%; margin-bottom: 15px;">
-        <option value="balanced">🥗 خطة متوازنة (25% بروتين، 45% كارب، 30% دهون)</option>
-        <option value="high-protein">🍗 عالي البروتين (33% بروتين، 37% كارب، 30% دهون)</option>
-        <option value="low-carb">🥑 منخفض الكارب (35% بروتين، 25% كارب، 40% دهون)</option>
-        <option value="keto">🥩 نظام كيتو (25% بروتين، 5% كارب، 70% دهون)</option>
-    </select>
-
-    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 10px;">
-        <span>تحديد نسب مخصصة؟ 🛠️</span>
-        <label class="switch">
-            <input type="checkbox" id="use-custom-macros" onchange="toggleCustomMacros()">
-            <span class="slider round"></span>
-        </label>
-    </div>
-
-    <div id="custom-macros-inputs" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
-        <div class="input-group">
-            <label>🍗 بروتين (%)</label>
-            <input type="number" id="custom-p" value="25" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-        <div class="input-group">
-            <label>🍚 كارب (%)</label>
-            <input type="number" id="custom-c" value="45" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-        <div class="input-group">
-            <label>🥑 دهون (%)</label>
-            <input type="number" id="custom-f" value="30" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-    </div>
-    <p id="macros-error" style="color: #ef4444; font-size: 0.8rem; text-align: center; margin-top: 10px; display: none;">⚠️ يجب أن يكون مجموع النسب 100%</p>
-</section>
+            <h3>📋 ثالثاً: اختيار الخطة (Macro Split)</h3>
+            <select id="macro-plan" onchange="updateMacros()" style="width: 100%;">
+                <option value="balanced">🥗 خطة متوازنة (25% بروتين، 45% كارب، 30% دهون)</option>
+                <option value="high-protein">🍗 عالي البروتين (33% بروتين، 37% كارب، 30% دهون)</option>
+                <option value="low-carb">🥑 منخفض الكارب (35% بروتين، 25% كارب، 40% دهون)</option>
+                <option value="keto">🥩 نظام كيتو (25% بروتين، 5% كارب، 70% دهون)</option>
+            </select>
+        </section>
 
         <section id="final-output">
             <h3>📊 رابعاً: المخرجات النهائية</h3>
@@ -930,71 +906,38 @@ input:checked + .slider:before { transform: translateX(26px); }
     analysisBox.innerHTML = `<span style="color:${col}; font-weight:bold;">${msg}</span>`;
 }
 
-    // دالة لإظهار/إخفاء حقول الماكروز المخصصة
-function toggleCustomMacros() {
-    const isCustom = document.getElementById('use-custom-macros').checked;
-    const inputsDiv = document.getElementById('custom-macros-inputs');
-    const planSelect = document.getElementById('macro-plan');
+    function updateMacros() {
+    const useCustom = document.getElementById('use-custom-toggle').checked;
+    const customVal = parseFloat(document.getElementById('custom-calories').value);
     
-    inputsDiv.style.display = isCustom ? 'grid' : 'none';
-    planSelect.disabled = isCustom; // تعطيل الاختيار الجاهز عند استخدام المخصص
-    updateMacros();
-}
+    // إذا السويتش شغال ومعنا رقم، نستخدمه. غير كذا نستخدم المختار من البوكسات.
+    let calories = (useCustom && customVal) ? customVal : (selectedCalories || currentTDEE);
 
-function updateMacros() {
-    const useCustomCal = document.getElementById('use-custom-toggle').checked;
-    const customCalVal = parseFloat(document.getElementById('custom-calories').value);
-    
-    // تحديد السعرات (مخصصة أو من الأهداف)
-    let calories = (useCustomCal && customCalVal > 0) ? customCalVal : (selectedCalories || currentTDEE);
+    if (!calories) return;
 
-    if (!calories || calories === 0) return;
+    const plan = document.getElementById('macro-plan').value;
+    const meals = parseInt(document.getElementById('meals-count').value);
 
-    const useCustomMacros = document.getElementById('use-custom-macros').checked;
     let p_per, c_per, f_per;
-
-    if (useCustomMacros) {
-        // قراءة النسب المخصصة من المستخدم
-        p_per = parseFloat(document.getElementById('custom-p').value) / 100;
-        c_per = parseFloat(document.getElementById('custom-c').value) / 100;
-        f_per = parseFloat(document.getElementById('custom-f').value) / 100;
-
-        // التأكد من أن المجموع 100% (تقريباً)
-        const total = (p_per + c_per + f_per) * 100;
-        const errorMsg = document.getElementById('macros-error');
-        if (Math.round(total) !== 100) {
-            errorMsg.style.display = 'block';
-            errorMsg.innerText = `⚠️ مجموع النسب الحالي: ${Math.round(total)}% (يجب أن يكون 100%)`;
-        } else {
-            errorMsg.style.display = 'none';
-        }
-    } else {
-        // استخدام الخطط الجاهزة
-        const plan = document.getElementById('macro-plan').value;
-        switch(plan) {
-            case 'balanced': p_per = 0.25; c_per = 0.45; f_per = 0.3; break;
-            case 'high-protein': p_per = 0.33; c_per = 0.37; f_per = 0.3; break;
-            case 'low-carb': p_per = 0.35; c_per = 0.25; f_per = 0.4; break;
-            case 'keto': p_per = 0.25; c_per = 0.05; f_per = 0.7; break;
-        }
+    switch(plan) {
+        case 'balanced': p_per = 0.25; c_per = 0.45; f_per = 0.3; break;
+        case 'high-protein': p_per = 0.33; c_per = 0.37; f_per = 0.3; break;
+        case 'low-carb': p_per = 0.35; c_per = 0.25; f_per = 0.4; break;
+        case 'keto': p_per = 0.25; c_per = 0.05; f_per = 0.7; break;
     }
 
-    // الحساب النهائي للجرامات
-    const protGrams = Math.round((calories * p_per) / 4);
-    const carbGrams = Math.round((calories * c_per) / 4);
-    const fatGrams = Math.round((calories * f_per) / 9);
+    const pG = Math.round((calories * p_per) / 4);
+    const cG = Math.round((calories * c_per) / 4);
+    const fG = Math.round((calories * f_per) / 9);
 
-    // تحديث المخرجات النهائية (سكشن رابعاً)
-    document.getElementById('res-protein').innerText = protGrams;
-    document.getElementById('res-carb').innerText = carbGrams;
-    document.getElementById('res-fat').innerText = fatGrams;
+    document.getElementById('res-protein').innerText = pG;
+    document.getElementById('res-carb').innerText = cG;
+    document.getElementById('res-fat').innerText = fG;
 
-    // تحديث توزيع الوجبات
-    const meals = parseInt(document.getElementById('meals-count').value);
     document.getElementById('meal-distribution').innerHTML = `
         <strong>الوجبة الواحدة (${meals} وجبات):</strong><br>
         <span style="font-size: 1.1em; color:var(--primary)">🔥 ${Math.round(calories/meals)} سعرة</span><br>
-        🍗 بروتين: <b>${Math.round(protGrams/meals)}g</b> | 🍚 كارب: <b>${Math.round(carbGrams/meals)}g</b> | 🥑 دهون: <b>${Math.round(fatGrams/meals)}g</b>
+        🍗 بروتين: <b>${Math.round(pG/meals)}g</b> | 🍚 كارب: <b>${Math.round(cG/meals)}g</b> | 🥑 دهون: <b>${Math.round(fG/meals)}g</b>
     `;
 }
 

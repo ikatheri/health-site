@@ -151,17 +151,6 @@
     font-weight: bold; 
     cursor: pointer; 
 }
-/* إخفاء أسهم المدخلات الرقمية */
-input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-input[type=number] { -moz-appearance: textfield; }
-
-/* تنسيق مفتاح التشغيل (Switch) */
-.switch { position: relative; display: inline-block; width: 50px; height: 24px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-input:checked + .slider { background-color: var(--primary); }
-input:checked + .slider:before { transform: translateX(26px); }
     </style>
 </head>
 <body>
@@ -248,70 +237,33 @@ input:checked + .slider:before { transform: translateX(26px); }
         </div>
 
         <section>
-    <h3>🎯 ثانياً: السعرات حسب هدفك</h3>
-    <div class="weight-goals">
-        <div class="goal-card" id="lose-card" onclick="selectGoal('lose')">
-            <h4>📉 إنقاص الوزن</h4>
-            <p><span id="calories-lose">0</span> سعرة</p>
-        </div>
-        <div class="goal-card" id="maintain-card" onclick="selectGoal('maintain')">
-            <h4>⚖️ تثبيت الوزن</h4>
-            <h3><span id="calories-maintain-val">0</span> سعرة</h3>
-        </div>
-        <div class="goal-card" id="gain-card" onclick="selectGoal('gain')">
-            <h4>📈 زيادة الوزن</h4>
-            <p><span id="calories-gain">0</span> سعرة</p>
-        </div>
-    </div>
-    <p id="weekly-summary" style="text-align:center; margin-top:15px; color:var(--primary); font-weight:bold;"></p>
-
-    <div style="margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; text-align: center;">
-        <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 10px;">
-            <span>استخدام سعرات مخصصة؟</span>
-            <label class="switch">
-                <input type="checkbox" id="use-custom-toggle" onchange="updateMacros()">
-                <span class="slider round"></span>
-            </label>
-        </div>
-        <input type="number" id="custom-calories" placeholder="أدخل سعراتك هنا" oninput="analyzeCustomCalories(); updateMacros();" 
-               style="width: 160px; text-align: center; padding: 10px; border: 2px solid var(--primary); border-radius: 8px;">
-        <div id="custom-analysis" style="margin-top: 10px; font-size: 0.85rem; min-height: 30px;"></div>
-    </div>
-</section>
+            <h3>🎯 ثانياً: السعرات حسب هدفك</h3>
+            <div class="weight-goals">
+                <div class="goal-card" id="lose-card" onclick="selectGoal('lose')">
+                    <h4>📉 إنقاص الوزن</h4>
+                    <p><span id="calories-lose">0</span> سعرة</p>
+                </div>
+                <div class="goal-card" id="maintain-card" onclick="selectGoal('maintain')">
+                    <h4>⚖️ تثبيت الوزن</h4>
+                    <h3><span id="calories-maintain">0</span> سعرة</h3>
+                </div>
+                <div class="goal-card" id="gain-card" onclick="selectGoal('gain')">
+                    <h4>📈 زيادة الوزن</h4>
+                    <p><span id="calories-gain">0</span> سعرة</p>
+                </div>
+            </div>
+            <p id="weekly-summary" style="text-align:center; margin-top:15px; color:var(--primary); font-weight:bold;"></p>
+        </section>
 
         <section>
-    <h3>📋 ثالثاً: اختيار الخطة (Macro Split)</h3>
-    <select id="macro-plan" onchange="updateMacros()" style="width: 100%; margin-bottom: 15px;">
-        <option value="balanced">🥗 خطة متوازنة (25% بروتين، 45% كارب، 30% دهون)</option>
-        <option value="high-protein">🍗 عالي البروتين (33% بروتين، 37% كارب، 30% دهون)</option>
-        <option value="low-carb">🥑 منخفض الكارب (35% بروتين، 25% كارب، 40% دهون)</option>
-        <option value="keto">🥩 نظام كيتو (25% بروتين، 5% كارب، 70% دهون)</option>
-    </select>
-
-    <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 10px;">
-        <span>تحديد نسب مخصصة؟ 🛠️</span>
-        <label class="switch">
-            <input type="checkbox" id="use-custom-macros" onchange="toggleCustomMacros()">
-            <span class="slider round"></span>
-        </label>
-    </div>
-
-    <div id="custom-macros-inputs" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
-        <div class="input-group">
-            <label>🍗 بروتين (%)</label>
-            <input type="number" id="custom-p" value="25" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-        <div class="input-group">
-            <label>🍚 كارب (%)</label>
-            <input type="number" id="custom-c" value="45" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-        <div class="input-group">
-            <label>🥑 دهون (%)</label>
-            <input type="number" id="custom-f" value="30" oninput="updateMacros()" class="no-spinners" style="text-align: center;">
-        </div>
-    </div>
-    <p id="macros-error" style="color: #ef4444; font-size: 0.8rem; text-align: center; margin-top: 10px; display: none;">⚠️ يجب أن يكون مجموع النسب 100%</p>
-</section>
+            <h3>📋 ثالثاً: اختيار الخطة (Macro Split)</h3>
+            <select id="macro-plan" onchange="updateMacros()" style="width: 100%;">
+                <option value="balanced">🥗 خطة متوازنة (25% بروتين، 45% كارب، 30% دهون)</option>
+                <option value="high-protein">🍗 عالي البروتين (33% بروتين، 37% كارب، 30% دهون)</option>
+                <option value="low-carb">🥑 منخفض الكارب (35% بروتين، 25% كارب، 40% دهون)</option>
+                <option value="keto">🥩 نظام كيتو (25% بروتين، 5% كارب، 70% دهون)</option>
+            </select>
+        </section>
 
         <section id="final-output">
             <h3>📊 رابعاً: المخرجات النهائية</h3>
@@ -822,28 +774,39 @@ input:checked + .slider:before { transform: translateX(26px); }
     }
 
     function calculate(isManual) {
-    const gender = document.getElementById('gender').value;
-    const age = parseFloat(document.getElementById('age').value);
-    const height = parseFloat(document.getElementById('height').value);
-    const weight = parseFloat(document.getElementById('weight').value);
-    const activity = parseFloat(document.getElementById('activity').value);
+        const gender = document.getElementById('gender').value;
+        const age = parseFloat(document.getElementById('age').value);
+        const height = parseFloat(document.getElementById('height').value);
+        const weight = parseFloat(document.getElementById('weight').value);
+        const activity = parseFloat(document.getElementById('activity').value);
 
-    if(!age || !height || !weight) {
-        alert("⚠️ يرجى ملء البيانات"); return;
+        if(!age || !height || !weight) {
+            alert("⚠️ عذراً، يرجى ملء جميع البيانات (العمر، الطول، الوزن) للمتابعة.");
+            return;
+        }
+
+        localStorage.setItem('fitnessData', JSON.stringify({ gender, age, height, weight, activity }));
+
+        let bmr = (10 * weight) + (6.25 * height) - (5 * age);
+        bmr = (gender === 'male') ? bmr + 5 : bmr - 161;
+        currentTDEE = Math.round(bmr * activity);
+
+        document.getElementById('calories-maintain').innerText = currentTDEE.toLocaleString();
+        document.getElementById('calories-lose').innerText = (currentTDEE - 500).toLocaleString();
+        document.getElementById('calories-gain').innerText = (currentTDEE + 300).toLocaleString();
+
+        // معالجة العرض التفصيلي
+        if(currentMode === 'detailed') {
+            processDetailedData(bmr, height, weight, gender, activity);
+            document.getElementById('detailed-section').style.display = 'block';
+        } else {
+            document.getElementById('detailed-section').style.display = 'none';
+        }
+
+        document.getElementById('results').style.display = 'block';
+        selectGoal('maintain');
+        if(isManual) document.getElementById('results').scrollIntoView({behavior: 'smooth'});
     }
-
-    let bmr = (10 * weight) + (6.25 * height) - (5 * age);
-    bmr = (gender === 'male') ? bmr + 5 : bmr - 161;
-    currentTDEE = Math.round(bmr * activity);
-
-    // تحديث القيم في الواجهة (تأكد من الـ IDs)
-    document.getElementById('calories-maintain-val').innerText = currentTDEE;
-    document.getElementById('calories-lose').innerText = (currentTDEE - 500).toLocaleString();
-    document.getElementById('calories-gain').innerText = (currentTDEE + 300).toLocaleString();
-
-    document.getElementById('results').style.display = 'block';
-    selectGoal('maintain'); // الخيار الافتراضي
-}
 
     function processDetailedData(bmr, h, w, gender, act) {
         document.getElementById('tdee-desc').innerText = `بناءً على قياساتك، فإن سعرات المحافظة هي ${currentTDEE.toLocaleString()} سعرة يومياً بناءً على معادلة Mifflin-St Jeor الأكثر دقة.`;
@@ -905,98 +868,33 @@ input:checked + .slider:before { transform: translateX(26px); }
         updateMacros();
     }
 
-    function analyzeCustomCalories() {
-    const customVal = parseFloat(document.getElementById('custom-calories').value);
-    const maintainVal = parseFloat(document.getElementById('calories-maintain-val').innerText);
-    const analysisBox = document.getElementById('custom-analysis');
-
-    if (!customVal || !maintainVal) { analysisBox.innerHTML = ""; return; }
-
-    const diffPercent = ((customVal - maintainVal) / maintainVal) * 100;
-    let msg = ""; let col = "#2563eb";
-
-    if (diffPercent < -35) {
-        msg = `⚠️ عجز قوي جداً (${Math.abs(diffPercent).toFixed(1)}%)؛ قد يسبب خمولاً.`;
-        col = "#ef4444";
-    } else if (diffPercent < 0) {
-        msg = `عجز بمقدار ${Math.abs(diffPercent).toFixed(1)}% عن المحافظة.`;
-    } else if (diffPercent > 15) {
-        msg = `⚠️ فائض عالٍ (${diffPercent.toFixed(1)}%)؛ قد يزيد الدهون.`;
-        col = "#f59e0b";
-    } else if (diffPercent > 0) {
-        msg = `فائض بمقدار ${diffPercent.toFixed(1)}% فوق المحافظة.`;
-        col = "#10b981";
-    }
-    analysisBox.innerHTML = `<span style="color:${col}; font-weight:bold;">${msg}</span>`;
-}
-
-    // دالة لإظهار/إخفاء حقول الماكروز المخصصة
-function toggleCustomMacros() {
-    const isCustom = document.getElementById('use-custom-macros').checked;
-    const inputsDiv = document.getElementById('custom-macros-inputs');
-    const planSelect = document.getElementById('macro-plan');
-    
-    inputsDiv.style.display = isCustom ? 'grid' : 'none';
-    planSelect.disabled = isCustom; // تعطيل الاختيار الجاهز عند استخدام المخصص
-    updateMacros();
-}
-
-function updateMacros() {
-    const useCustomCal = document.getElementById('use-custom-toggle').checked;
-    const customCalVal = parseFloat(document.getElementById('custom-calories').value);
-    
-    // تحديد السعرات (مخصصة أو من الأهداف)
-    let calories = (useCustomCal && customCalVal > 0) ? customCalVal : (selectedCalories || currentTDEE);
-
-    if (!calories || calories === 0) return;
-
-    const useCustomMacros = document.getElementById('use-custom-macros').checked;
-    let p_per, c_per, f_per;
-
-    if (useCustomMacros) {
-        // قراءة النسب المخصصة من المستخدم
-        p_per = parseFloat(document.getElementById('custom-p').value) / 100;
-        c_per = parseFloat(document.getElementById('custom-c').value) / 100;
-        f_per = parseFloat(document.getElementById('custom-f').value) / 100;
-
-        // التأكد من أن المجموع 100% (تقريباً)
-        const total = (p_per + c_per + f_per) * 100;
-        const errorMsg = document.getElementById('macros-error');
-        if (Math.round(total) !== 100) {
-            errorMsg.style.display = 'block';
-            errorMsg.innerText = `⚠️ مجموع النسب الحالي: ${Math.round(total)}% (يجب أن يكون 100%)`;
-        } else {
-            errorMsg.style.display = 'none';
-        }
-    } else {
-        // استخدام الخطط الجاهزة
+    function updateMacros() {
         const plan = document.getElementById('macro-plan').value;
+        const meals = parseInt(document.getElementById('meals-count').value);
+        const calories = selectedCalories || currentTDEE; 
+
+        let p_per, c_per, f_per;
         switch(plan) {
             case 'balanced': p_per = 0.25; c_per = 0.45; f_per = 0.3; break;
             case 'high-protein': p_per = 0.33; c_per = 0.37; f_per = 0.3; break;
             case 'low-carb': p_per = 0.35; c_per = 0.25; f_per = 0.4; break;
-            case 'keto': p_per = 0.25; c_per = 0.05; f_per = 0.7; break;
+            case 'keto': p_per = 0.25; c_per = 0.05; f_per = 0.70; break;
         }
+
+        const protGrams = Math.round((calories * p_per) / 4);
+        const carbGrams = Math.round((calories * c_per) / 4);
+        const fatGrams = Math.round((calories * f_per) / 9);
+
+        document.getElementById('res-protein').innerText = protGrams;
+        document.getElementById('res-carb').innerText = carbGrams;
+        document.getElementById('res-fat').innerText = fatGrams;
+
+        document.getElementById('meal-distribution').innerHTML = `
+            <strong>الوجبة الواحدة (${meals} وجبات):</strong><br>
+            <span style="font-size: 1.1em; color:var(--primary)">🔥 ${Math.round(calories/meals)} سعرة</span><br>
+            🍗 بروتين: <b>${Math.round(protGrams/meals)}g</b> | 🍚 كارب: <b>${Math.round(carbGrams/meals)}g</b> | 🥑 دهون: <b>${Math.round(fatGrams/meals)}g</b>
+        `;
     }
-
-    // الحساب النهائي للجرامات
-    const protGrams = Math.round((calories * p_per) / 4);
-    const carbGrams = Math.round((calories * c_per) / 4);
-    const fatGrams = Math.round((calories * f_per) / 9);
-
-    // تحديث المخرجات النهائية (سكشن رابعاً)
-    document.getElementById('res-protein').innerText = protGrams;
-    document.getElementById('res-carb').innerText = carbGrams;
-    document.getElementById('res-fat').innerText = fatGrams;
-
-    // تحديث توزيع الوجبات
-    const meals = parseInt(document.getElementById('meals-count').value);
-    document.getElementById('meal-distribution').innerHTML = `
-        <strong>الوجبة الواحدة (${meals} وجبات):</strong><br>
-        <span style="font-size: 1.1em; color:var(--primary)">🔥 ${Math.round(calories/meals)} سعرة</span><br>
-        🍗 بروتين: <b>${Math.round(protGrams/meals)}g</b> | 🍚 كارب: <b>${Math.round(carbGrams/meals)}g</b> | 🥑 دهون: <b>${Math.round(fatGrams/meals)}g</b>
-    `;
-}
 
     function downloadPDF() { window.print(); }
 
