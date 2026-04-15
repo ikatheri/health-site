@@ -320,13 +320,292 @@
             </div>
 			<button class="btn-info" onclick="openModal()">🔍 تعرف على سعرات الأكل والتمارين</button>
         </section>
+
+        <section id="how-to-start">
+    <div style="text-align: center; margin-bottom: 25px;">
+        <h3>🚀 سادساً: كيف أبدأ وأطبق</h3>
+        <p>خطوات عملية لمساعدتك في الوصول لهدفك بأسرع وقت</p>
+    </div>
+
+    <div class="steps-grid">
+        <button class="step-btn" onclick="openPopup('step1')">🥩 أوزن قبل الطبخ أو بعده؟</button>
+        <button class="step-btn" onclick="openPopup('step2')">🛒 تسوق بذكاء</button>
+        <button class="step-btn" onclick="openPopup('step3')">⚖️ متى أقيس وزني؟</button>
+        <button class="step-btn" onclick="openPopup('step4')">🔄 كيف تستمر؟ (أهم من أي خطة)</button>
+    </div>
+</section>
+
+<div id="popup-overlay" class="overlay" onclick="closePopup()">
+    <div class="popup-content" onclick="event.stopPropagation()">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <div id="popup-body">
+            </div>
+    </div>
+</div>
+
+<style>
+    /* تنسيق قسم الأزرار */
+    .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .step-btn {
+        background-color: var(--accent-blue);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        padding: 15px;
+        border-radius: 12px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 0; /* لإلغاء المارجن الافتراضي للأزرار */
+    }
+
+    .step-btn:hover {
+        background-color: var(--primary);
+        color: white;
+        transform: scale(1.05);
+    }
+
+    /* تنسيق البوب أب */
+    .overlay {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0,0,0,0.7);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .popup-content {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        text-align: center;
+        animation: slideUp 0.3s ease-out;
+
+        max-height: 80vh; /* يغطي 80% من طول الشاشة كحد أقصى */
+        overflow-y: auto; /* يظهر السكرول عند الحاجة فقط */
+    }
+
+    .close-btn {
+        position: absolute;
+        top: 15px; left: 20px;
+        font-size: 25px;
+        cursor: pointer;
+        color: #666;
+    }
+
+    @keyframes slideUp {
+        from { transform: translateY(50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+</style>
+
+<script>
+    // بيانات البوب أب - يمكنك تعديل النصوص هنا بسهولة
+    const popupData = {
+        step1: {
+            title: "🥩 أوزن قبل الطبخ أو بعده؟",
+            content: `
+                <div style="text-align: right; direction: rtl;">
+                    <p>خلني أوضحها لك بشكل مباشر: <strong>ما راح يفرق توزن قبل أو بعد الطبخ</strong>، لأن القيم الغذائية في النهاية هي نفسها.</p>
+                    
+                    <p style="background: var(--accent-blue); padding: 10px; border-radius: 8px;">
+                        ⚠️ اللي يتغير بس: <b>الوزن (بسبب الماء)</b> وليس السعرات.
+                    </p>
+
+                    <h4 style="color: var(--primary);">🎯 طيب وش الأهم؟</h4>
+                    <p>إنك تحسب أكلك بنفس الطريقة كل مرة، سواء اخترت (قبل) أو (بعد). <b>🔴 لا تغيّر بينهم كل يوم</b>، هنا تخرب حسابك.</p>
+
+                    <h4 style="color: var(--primary);">📱 استخدم تطبيق يساعدك</h4>
+                    <p>أهم شيء تعتمد على تطبيق يحسب لك السعرات مثل <b>MyFitnessPal</b> أو أي بديل مشابه.</p>
+
+                    <h4 style="color: var(--primary);">🧠 هل لازم تكون دقيق 100%؟</h4>
+                    <p><strong>لا.</strong> واللي يقول لك غير كذا… قاعد يعقدها عليك. جسمك ما يفرق بين 150g و 160g، الفرق البسيط ما يأثر.</p>
+
+                    <div style="border-right: 4px solid var(--secondary); padding-right: 15px; margin: 15px 0;">
+                        <b>📌 المهم: تكون ثابت، مو مثالي.</b><br>
+                        استخدم نفس الميزان، نفس الطريقة، ونفس أسلوب القياس.
+                    </div>
+
+                    <h4 style="color: #ef4444;">❌ أخطاء شائعة (تجنبها):</h4>
+                    <ul style="padding-right: 20px;">
+                        <li>تخلط بين وزن نيء ومطبوخ.</li>
+                        <li>ما تستخدم ميزان وتعتمد على "التقدير".</li>
+                        <li>تدقق بزيادة وتطفش وتترك النظام.</li>
+                    </ul>
+
+                    <p style="background: var(--accent-green); padding: 15px; border-radius: 10px; font-weight: bold; text-align: center;">
+                        🔥 الخلاصة: لا تحتاج كمال… تحتاج استمرارية. كل ما كنت بسيط وواضح، التزمت أكثر.
+                    </p>
+                    
+                    <p style="text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;">
+                        أنت فعليًا متقدم على 80% من المبتدئين 👌
+                    </p>
+                </div>
+            `
+        },
+        step2: {
+            title: "🛒 تسوّق بذكاء",
+            content: `
+                <div style="text-align: right; direction: rtl;">
+                    <p style="background: var(--accent-red); padding: 10px; border-radius: 8px; border-right: 4px solid #ef4444;">
+                        ⚠️ <b>نصيحة مهمة:</b> أغلب الناس يخرب نظامه مو لأنه ما عنده خطة، بل لأنه ما عنده أكل جاهز وقت الجوع!
+                    </p>
+
+                    <h4 style="color: var(--primary);">❌ الحل المكلف:</h4>
+                    <p>الاشتراك في مطاعم الدايت فكرة كويسة، لكنها <b>غالية ومو مستدامة</b> لكثير ناس.</p>
+
+                    <h4 style="color: var(--secondary);">✅ الحل الأفضل: اطبخ أكلك بنفسك</h4>
+                    <p>بس قبل الطبخ.. لازم تعرف كيف تشتري صح وتوفر فلوسك.</p>
+
+                    <div style="background: var(--light); padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                        <h4 style="margin-top: 0; color: var(--primary);">🛍️ من وين تشتري؟</h4>
+                        <ul style="padding-right: 20px;">
+                            <li><b>ابتعد عن:</b> البقالات الصغيرة (أسعارها أعلى).</li>
+                            <li><b>الأفضل:</b> أسواق الجملة والهايبر ماركت (مثل <b>الصالة الاقتصادية</b>).</li>
+                        </ul>
+                    </div>
+
+                    <h4 style="color: var(--primary);">💰 كيف توفر أكثر؟</h4>
+                    <ul style="padding-right: 20px;">
+                        <li>اشترِ <b>بكميات كبيرة</b> للأشياء الأساسية.</li>
+                        <li>استغل <b>العروض</b> الأسبوعية.</li>
+                        <li><b>خزن وأجمد:</b> بما أنك بتاكل نفس الأكل يومياً، التجميد يوفر وقت وجهد.</li>
+                    </ul>
+
+                    <h4 style="color: var(--primary);">🍫 هل أقطع الأشياء اللي أحبها؟</h4>
+                    <p><b>لا.</b> تحب شوكولاتة أو بسكويت؟ عادي جداً. المهم <b>تدخلها ضمن سعراتك اليومية</b>. فيه خيارات قليلة السكر أو استمتع بالعادية باعتدال.</p>
+
+                    <div style="background: var(--accent-green); padding: 15px; border-radius: 10px; font-weight: bold; text-align: center; margin-top: 15px;">
+                        🔥 الخلاصة:<br>
+                        جهّز أكلك = تلتزم<br>
+                        تسوّق بذكاء = توفر<br>
+                        كل اللي تحبه باعتدال = تستمر
+                    </div>
+
+                    <p style="text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;">
+                        لو ضبطت التّسوق والأكل، حليت أكبر مشكلة تواجهك 👌
+                    </p>
+                </div>
+            `
+        },
+        step3: {
+            title: "⚖️ متى أقيس وزني؟",
+            content: `
+                <div style="text-align: right; direction: rtl;">
+                    <p>الميزان أداة ذكية، لكن لو استخدمته غلط بيخدعك وتوسوس. <b>إليك الطريقة العلمية:</b></p>
+                    
+                    <h4 style="color: var(--secondary);">🕒 أفضل وقت للقياس:</h4>
+                    <ul style="background: var(--accent-green); padding: 15px 25px; border-radius: 10px; list-style: none;">
+                        <li>✅ أول ما تصحى من النوم.</li>
+                        <li>✅ بعد دخول الحمام (عزك الله).</li>
+                        <li>✅ قبل الأكل أو الشرب.</li>
+                    </ul>
+
+                    <h4 style="color: var(--primary);">📅 كم مرة أقيس؟</h4>
+                    <p>❌ لا تقيس كل شوي وتتوتر. <b>الأفضل:</b> اوزن يومياً أو (3-5 مرات في الأسبوع) ثم خذ <b>المتوسط</b>.</p>
+
+                    <div style="border: 2px solid var(--primary); padding: 15px; border-radius: 12px; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: var(--primary);">📊 الحل الصح: خذ متوسط الأسبوع</h4>
+                        <p style="font-size: 0.9rem;">وزنك يتغير يومياً بسبب الماء، الملح، والتوتر. لا تهمك أرقام الأيام المنفردة.</p>
+                        <p style="background: var(--light); padding: 10px; border-radius: 5px; font-family: monospace; text-align: center;">
+                            سبت: 82 | أحد: 81.5 | ثلاثاء: 81.8 <br>
+                            <b>👉 المتوسط الحقيقي = 81.7 كجم</b>
+                        </p>
+                    </div>
+
+                    <h4 style="color: var(--primary);">🎯 كيف تعرف إنك ماشي صح؟</h4>
+                    <p>إذا كان هدفك <b>التنشيف</b>: الطبيعي ينزل وزنك بمعدل (0.3 - 1 كجم) في الأسبوع.</p>
+                    <ul style="padding-right: 20px;">
+                        <li>لو ما تغير الوزن لفترة: <b>قلل سعراتك شوي.</b></li>
+                        <li>لو نزل بسرعة مرة (دوخة/تعب): <b>زود سعراتك شوي.</b></li>
+                    </ul>
+
+                    <h4 style="color: #ef4444;">❌ أخطاء تقتلك نفسياً:</h4>
+                    <ul style="padding-right: 20px;">
+                        <li>توزن بعد الأكل مباشرة.</li>
+                        <li>تتوتر من ارتفاع رقم يوم واحد.</li>
+                        <li>تنسى مراقبة شكلك في المرايا وقياسات الملابس.</li>
+                    </ul>
+
+                    <div style="background: var(--accent-blue); padding: 15px; border-radius: 10px; font-weight: bold; text-align: center;">
+                        🔥 القاعدة الذهبية:<br>
+                        الاستمرار على المتوسط الأسبوعي هو مفتاح التحكم الحقيقي بتقدمك.
+                    </div>
+
+                    <p style="text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;">
+                        أنت الآن تملك الوعي الكافي لتجاهل خدع الميزان 👌
+                    </p>
+                </div>
+            `
+        },
+        step4: {
+            title: "🔄 كيف تستمر؟ (أهم من أي خطة)",
+            content: `
+                <div style="text-align: right; direction: rtl;">
+                    <p style="background: var(--accent-blue); padding: 10px; border-radius: 8px; border-right: 4px solid var(--primary);">
+                        <b>قاعدة ذهبية:</b> أي خطة بسيطة تستمر عليها، أفضل بمراحل من خطة مثالية تتركها بعد أسبوع.
+                    </p>
+
+                    <h4 style="color: var(--primary);">😴 النوم (المحرك الخفي)</h4>
+                    <p>حاول تنام <b>6–8 ساعات</b>. نومك السيء يعني جوع أعلى، حرق أقل، والتزام مهزوز.</p>
+
+                    <h4 style="color: var(--secondary);">💧 شرب الماء</h4>
+                    <p>من 2 إلى 3 لتر يومياً. الماء يقلل "الجوع الوهمي" ويساعد جسمك يشتغل بكفاءة عالية.</p>
+
+                    <h4 style="color: #ef4444;">🍽️ لا تجوع نفسك بزيادة</h4>
+                    <p>تقليل الأكل بشكل مفرط يؤدي للانفجار والتخريب لاحقاً. خلك واقعي في عجز السعرات عشان تقدر تكمل.</p>
+
+                    <div style="background: var(--light); padding: 15px; border-radius: 12px; border: 1px solid #e2e8f0; margin: 15px 0;">
+                        <h4 style="margin-top: 0; color: var(--primary);">🍫 لو خربت يوم؟</h4>
+                        <p>عادي جداً! مو نهاية العالم. لا تحول "وجبة خربانة" إلى "أسبوع خربان". كمل يومك طبيعي وكأن شيئاً لم يكن.</p>
+                        <p>🧠 <b>نصيحة:</b> ابعد عن عقلية "كل شيء أو لا شيء". التزام 80% يكفي جداً للوصول لهدفك.</p>
+                    </div>
+
+                    <h4 style="color: var(--primary);">🏋️‍♂️ التمرين ببساطة</h4>
+                    <p>3–4 أيام بالأسبوع كافية جداً كبداية. المهم هو <b>الثبات</b> وليس الكثافة اللي تخليك تنقطع.</p>
+
+                    <div style="background: var(--accent-green); padding: 15px; border-radius: 10px; font-weight: bold; text-align: center; margin-top: 15px;">
+                        🔥 الخلاصة:<br>
+                        نم كويس | اشرب ماء | تمرن بانتظام | وإذا خربت؟ كمل ولا توقف
+                    </div>
+
+                    <p style="text-align: center; color: var(--primary); font-weight: bold; margin-top: 15px;">
+                        الاستمرارية هي السر الحقيقي الذي يجهله الكثيرون 👌
+                    </p>
+                </div>
+            `
+        },
+    };
+
+    function openPopup(id) {
+        const data = popupData[id];
+        const body = document.getElementById('popup-body');
+        body.innerHTML = `<h3>${data.title}</h3><p style="line-height:1.6; color:#444;">${data.content}</p>`;
+        document.getElementById('popup-overlay').style.display = 'flex';
+    }
+
+    function closePopup() {
+        document.getElementById('popup-overlay').style.display = 'none';
+    }
+</script>
         </section>
         
         <button class="btn-pdf" onclick="downloadPDF()">حفظ الخطة كـ PDF 📥</button>
     </div>
 
     <footer>
-        <p>تواصل معنا عبر تيك توك: <a href="https://www.tiktok.com/@bodz.sa" target="_blank">@bodz.sa 📱</a></p>
+        <p><b>عندك سؤال؟ أو حاب تطوّر الموقع أكثر؟</b><br>
+        تواصل معي عبر تيك توك: <a href="https://www.tiktok.com/@bodz.sa" target="_blank">@bodz.sa 📱</a></p>
     </footer>
 </div>
 
