@@ -313,18 +313,18 @@ input:checked + .slider:before { transform: translateX(26px); }
         </label>
     </div>
 
-    <div id="custom-macros-inputs" style="display: none; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 20px;">
-    <div class="input-group">
+    <div id="custom-macros-inputs" style="display: none; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 20px;">
+    <div class="input-group" style="flex: 1; min-width: 80px;">
         <label>🍗 بروتين (%)</label>
-        <input type="text" id="custom-p" value="25" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center;">
+        <input type="text" id="custom-p" value="25" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center; width: 100%;">
     </div>
-    <div class="input-group">
+    <div class="input-group" style="flex: 1; min-width: 80px;">
         <label>🍚 كارب (%)</label>
-        <input type="text" id="custom-c" value="45" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center;">
+        <input type="text" id="custom-c" value="45" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center; width: 100%;">
     </div>
-    <div class="input-group">
+    <div class="input-group" style="flex: 1; min-width: 80px;">
         <label>🥑 دهون (%)</label>
-        <input type="text" id="custom-f" value="30" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center;">
+        <input type="text" id="custom-f" value="30" oninput="this.value = convertArabicNumbers(this.value); updateMacros();" style="text-align: center; width: 100%;">
     </div>
 </div>
 
